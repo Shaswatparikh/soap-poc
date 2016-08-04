@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://webservices.business.homeservices.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="InstallEndpointService" targetNamespace="http://webservices.business.homeservices.com/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://webservices.business.homeservices.com/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://webservices.business.homeservices.com/">
+  <xs:complexType name="installationInformation">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="productDetails" nillable="true" type="tns:productDetail"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="productDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="address" type="tns:address"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="blackoutDates" nillable="true" type="xs:dateTime"/>
+      <xs:element name="deliveryIncluded" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="distanceChargeItemNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="distanceCharges" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="gasHookup" type="tns:gasHookup"/>
+      <xs:element name="itemPrices">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" name="key" type="tns:item"/>
+                  <xs:element minOccurs="0" name="value" type="tns:itemPrice"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="multipleTownships" type="xs:boolean"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="permits" nillable="true" type="tns:permit"/>
+      <xs:element minOccurs="0" name="productId" type="xs:string"/>
+      <xs:element minOccurs="0" name="storeNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="address">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="city" type="xs:string"/>
+      <xs:element minOccurs="0" name="county" type="xs:string"/>
+      <xs:element name="distance" type="xs:int"/>
+      <xs:element minOccurs="0" name="state" type="xs:string"/>
+      <xs:element minOccurs="0" name="zipCode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gasHookup">
+    <xs:sequence>
+      <xs:element name="included" type="xs:boolean"/>
+      <xs:element name="price" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="item">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="classificationCode" type="tns:classificationCode"/>
+      <xs:element minOccurs="0" name="itemNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="longDescription" type="xs:string"/>
+      <xs:element minOccurs="0" name="question" type="xs:string"/>
+      <xs:element minOccurs="0" name="shortDescription" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="itemPrice">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="division" type="xs:string"/>
+      <xs:element minOccurs="0" name="itemNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="price" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="promotionType" type="tns:promotionType"/>
+      <xs:element minOccurs="0" name="sku" type="xs:string"/>
+      <xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="stopDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="store" type="xs:string"/>
+      <xs:element minOccurs="0" name="itemNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="permit">
+    <xs:sequence>
+      <xs:element name="active" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="price" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="createDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="itemNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="lastUpdateDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="municipalityType" type="tns:municipalityType"/>
+      <xs:element minOccurs="0" name="permitNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="permitType" type="tns:permitType"/>
+      <xs:element minOccurs="0" name="state" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="schedulingInformation">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="blackoutDates" nillable="true" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="sima" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="classificationCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="W"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="promotionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="REGULAR"/>
+      <xs:enumeration value="CLEARANCE"/>
+      <xs:enumeration value="PROMOTION"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="municipalityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CITY"/>
+      <xs:enumeration value="COUNTY"/>
+      <xs:enumeration value="TOWNSHIP"/>
+      <xs:enumeration value="STATE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="permitType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BUILDING"/>
+      <xs:enumeration value="ELECTRICAL"/>
+      <xs:enumeration value="PLUMBING"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="version" nillable="true" type="xs:float"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getSchedulingInformation">
+  </wsdl:message>
+  <wsdl:message name="getSchedulingInformationResponse">
+    <wsdl:part name="return" type="tns:schedulingInformation">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getInstallInformation">
+    <wsdl:part name="arg0" type="tns:installationInformation">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getInstallInformation_vResponse">
+    <wsdl:part name="return" type="tns:installationInformation">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getInstallInformation_v">
+    <wsdl:part name="arg0" type="tns:installationInformation">
+    </wsdl:part>
+    <wsdl:part element="tns:version" name="version">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getInstallInformationResponse">
+    <wsdl:part name="return" type="tns:installationInformation">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="InstallEndpoint">
+    <wsdl:operation name="getInstallInformation_v">
+      <wsdl:input message="tns:getInstallInformation_v" name="getInstallInformation_v">
+    </wsdl:input>
+      <wsdl:output message="tns:getInstallInformation_vResponse" name="getInstallInformation_vResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSchedulingInformation">
+      <wsdl:input message="tns:getSchedulingInformation" name="getSchedulingInformation">
+    </wsdl:input>
+      <wsdl:output message="tns:getSchedulingInformationResponse" name="getSchedulingInformationResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInstallInformation">
+      <wsdl:input message="tns:getInstallInformation" name="getInstallInformation">
+    </wsdl:input>
+      <wsdl:output message="tns:getInstallInformationResponse" name="getInstallInformationResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="InstallEndpointServiceSoapBinding" type="tns:InstallEndpoint">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getInstallInformation_v">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getInstallInformation_v">
+        <soap:header message="tns:getInstallInformation_v" part="version" use="literal">
+        </soap:header>
+        <soap:body namespace="http://webservices.business.homeservices.com/" parts="arg0" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getInstallInformation_vResponse">
+        <soap:body namespace="http://webservices.business.homeservices.com/" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSchedulingInformation">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getSchedulingInformation">
+        <soap:body namespace="http://webservices.business.homeservices.com/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getSchedulingInformationResponse">
+        <soap:body namespace="http://webservices.business.homeservices.com/" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInstallInformation">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getInstallInformation">
+        <soap:body namespace="http://webservices.business.homeservices.com/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getInstallInformationResponse">
+        <soap:body namespace="http://webservices.business.homeservices.com/" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="InstallEndpointService">
+    <wsdl:port binding="tns:InstallEndpointServiceSoapBinding" name="InstallEndpointPort">
+      <soap:address location="http://localhost:8080/iss/webservices/install"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
